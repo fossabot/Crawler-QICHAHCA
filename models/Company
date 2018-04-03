@@ -1,0 +1,34 @@
+const Sequelize = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define("Company", {
+    ID                  :  { type: Sequelize.STRING, unique: true , allowNull: false, primaryKey: true},
+    Logo                :  { type: Sequelize.STRING(255), allowNull: false},
+    Name                :  { type: Sequelize.STRING(255), allowNull: false},
+    BossName            :  { type: Sequelize.STRING(255), allowNull: false},
+    BossID              :  { type: Sequelize.STRING(255), allowNull: false},
+    Phone               :  { type: Sequelize.STRING(255), allowNull: false},
+    Email               :  { type: Sequelize.STRING(255), allowNull: false},
+    Website             :  { type: Sequelize.STRING(255), allowNull: false},
+    RegisterMoney       :  { type: Sequelize.STRING(255), allowNull: false},
+    ActualMoney         :  { type: Sequelize.STRING(255), allowNull: false},
+    State               :  { type: Sequelize.STRING(255), allowNull: false},
+    RegisterDate        :  { type: Sequelize.STRING     , allowNull: false},
+    RegisterID          :  { type: Sequelize.STRING(255), allowNull: false},
+    OrganizationID      :  { type: Sequelize.STRING(255), allowNull: false},
+    PayPersonID         :  { type: Sequelize.STRING(255), allowNull: false},
+    UniqueSocietyID     :  { type: Sequelize.STRING(255), allowNull: false},
+    CompanyType         :  { type: Sequelize.STRING(255), allowNull: false},
+    Profession          :  { type: Sequelize.STRING(255), allowNull: false},
+    ConfirmDate         :  { type: Sequelize.STRING     , allowNull: false},
+    RegisterOrganiztion :  { type: Sequelize.STRING(255), allowNull: false},
+    Region              :  { type: Sequelize.STRING(255), allowNull: false},
+    EnglishName         :  { type: Sequelize.STRING(255), allowNull: false},
+    EverName            :  { type: Sequelize.STRING(255), allowNull: false},
+    SellType            :  { type: Sequelize.STRING(255), allowNull: false},
+    Faculty             :  { type: Sequelize.STRING(255), allowNull: false},
+    SellTime            :  { type: Sequelize.STRING(255), allowNull: false},
+    Place               :  { type: Sequelize.STRING(255), allowNull: false},
+    MainProduct         :  { type: Sequelize.TEXT, allowNull: false},
+  })
+};

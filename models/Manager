@@ -1,0 +1,9 @@
+const Sequelize = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define("Manager", {
+    ID : { type: Sequelize.STRING, unique: true , allowNull: false, primaryKey: true},
+    Name : { type: Sequelize.STRING, allowNull: false},
+    CompanyID : { type: Sequelize.STRING, unique: false , allowNull: false},
+    Job : { type: Sequelize.STRING, allowNull: false},
+  })
+};
