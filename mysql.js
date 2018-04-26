@@ -10,12 +10,12 @@ mysql.core = {
 };
 
 mysql.companySel = {
-  Name : '#fapiao-title > div.panel-body.text-center > div.m-t-md.TaxView > p:nth-child(1) > span',
+  Name : '#company-top > div > div.content > div.row.title > h1',
   Logo : '#company-top > div > div.logo > div.imgkuang > img',
   Phone  : '#company-top > div > div.content > div:nth-child(2) > span.cvlu > span',
   Email : '#company-top > div > div.content > div:nth-child(3) > span:nth-child(2) > a',
   Website : '#company-top > div > div.content > div:nth-child(3) > span:nth-child(4) > a',
-  BossName : '#Cominfo > table:nth-child(3) > tbody > tr:nth-child(2) > td.ma_left > div > div.clearfix > div:nth-child(2) > a.bname',
+  BossName : '#Cominfo > table:nth-child(3) > tbody > tr:nth-child(2) > td:nth-child(1) > div > div.clearfix > div:nth-child(2) > a.bname',
   RegisterMoney : '#Cominfo > table:nth-child(4) > tbody > tr:nth-child(1) > td:nth-child(2)',
   ActualMoney : '#Cominfo > table:nth-child(4) > tbody > tr:nth-child(1) > td:nth-child(4)',
   State : '#Cominfo > table:nth-child(4) > tbody > tr:nth-child(2) > td:nth-child(2)',
@@ -74,7 +74,7 @@ mysql.getInvesSel = function (index) {
 
 mysql.getManSel = function (index) {
   index = index + 1;
-  res.Name = "#Mainmember > table > tbody > tr:nth-child(" + index.toString() + ") > td:nth-child(2) > a:nth-child(1)";
+  res.Name = "#Mainmember > table > tbody > tr:nth-child(" + index.toString() + ") > td:nth-child(2) > a.c_a";
   res.Job = "#Mainmember > table > tbody > tr:nth-child(" + index.toString() + ") > td.text-center";
   return res;
 }

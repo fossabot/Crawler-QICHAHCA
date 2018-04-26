@@ -1,8 +1,18 @@
 config = {};
+config.redis = {
+    host : "115.159.39.220",
+    port : "6379",
+    password : "Anatas"
+}
+config.mongodb = {
+    url : "mongodb://115.159.39.220:27017",
+    dbName : "Crawl",
+    collectionName : "Company"
+}
 config.core = {
     user :  {
-         username : "13401655897",
-         password : "HHUCrawlQiChaCha"
+         username : "18245461892",
+         password : "1562810221llj"
     },
     url : {
         home : "https://www.qichacha.com",
@@ -12,6 +22,7 @@ config.core = {
     selector : {
         username : '#nameNormal',
         password : '#pwdNormal',
+        passwordlogin : '#normalLogin',
         search_page_num : 10,
         search_res_num : 10,
         is_search_res : '#company-top > div > div.content > div.row.title',
