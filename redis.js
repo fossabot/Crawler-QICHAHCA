@@ -85,5 +85,5 @@ async function main()
   HandleInvestor();
 }
 
-// main();
+main();
 module.exports = main;

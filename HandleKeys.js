@@ -67,7 +67,6 @@ async function HandleOneKey(browser, keyword){
     }
 }
 async function StartHandleKeys(browser, page, keywords) {
-    // keywords = new Array("腾讯", "星网", "百度", "支付宝");
 
     for (let i = 0; i < keywords.length; i ++)
     {
@@ -93,4 +92,5 @@ async function HandleLogin(keywords)
 }
 
 module.exports = HandleLogin;
-// HandleLogin();
+keywords = new Array("腾讯", "星网", "百度", "支付宝");
+HandleLogin(keywords);
