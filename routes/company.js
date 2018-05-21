@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/test', function(req, res, next) {
+router.get('/:_id', function(req, res, next) {
   MongoClient.connect(config.mongodb.url, function(err, client) {
     if(err != null)
     {
@@ -25,7 +25,7 @@ router.get('/test', function(req, res, next) {
     const db = client.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-    dbCompany.find({"_id" : "https://www.qichacha.com/firm_f1c5372005e04ba99175d5fd3db7b8fc.html"}).toArray(function(err, docs){
+    dbCompany.find({"_id" : "https://www.qichacha.com/"+req.params._id}).toArray(function(err, docs){
       if(err != null)
       {
         console.log(err);
