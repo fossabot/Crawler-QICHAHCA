@@ -1,6 +1,6 @@
-const HandleKeys = require("./HandleKeys");
-const HandleRedis = require("./redis");
-const HandleMongodb = require("./mongodb");
+// const HandleKeys = require("./HandleKeys");
+// const HandleRedis = require("./redis");
+// const HandleMongodb = require("./mongodb");
 
 
 const company = require('./routes/company');
