@@ -5,6 +5,7 @@
 
 const company = require('./routes/company');
 const relations = require('./routes/relations');
+const search = require('./routes/search');
 
 const express = require('express');
 const app = express();
@@ -36,6 +37,7 @@ app.use(function(req, res, next) {
 
 app.use('/company', company);
 app.use('/relations', relations);
+app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
