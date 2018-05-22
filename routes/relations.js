@@ -102,12 +102,18 @@ router.get('/:_ifAdj/:_id', async function(req, res, next) {
 router.get('/:_ifAdj/:_id/3', async function(req, res, next) {
   let edge = "";
   let changewhat;
-  if(req.params._ifAdj){
+  if(req.params._ifAdj == '1')
+  {
     edge = "->Adj";
     changewhat = ChangItem;
-  }else{
+  }
+  else if(req.params._ifAdj == '0')
+  {
     edge = "->RAdj";
     changewhat = ChangItem_R;
+  }
+  else {
+    next();
   }
   let total_res = {};
   total_res.id = basic + req.params._id;
