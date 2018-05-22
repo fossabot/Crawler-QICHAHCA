@@ -48,8 +48,8 @@ async function HandleOneRecord(data, type)
     client.rpush("PageRank", data.CompanyID + "->" + data.InvestorID);
     client.set(data.InvestorID + "->" + "name", data.InvestorName, redis.print);
     client.set(data.CompanyID + "->" + "name", data.CompanyName, redis.print);
-    client.sadd(data.InvestorID + "->" + "Adj", "1" + data.InvestRate + "->" + data.CompanyID);
-    client.sadd(data.CompanyID + "->" + "RAdj", "1" + data.InvestRate + "->" + data.InvestorID);
+    client.sadd(data.InvestorID + "->" + "Adj", "1" + data.InvestRate + "%" + data.InvestMoney + "->" + data.CompanyID);
+    client.sadd(data.CompanyID + "->" + "RAdj", "1" + data.InvestRate + "%" + data.InvestMoney + "->" + data.InvestorID);
   }
 }
 
@@ -86,3 +86,4 @@ async function main()
 }
 
 module.exports = main;
+// main();

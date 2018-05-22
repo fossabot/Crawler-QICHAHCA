@@ -79,6 +79,7 @@ async function HandleLogin(keywords)
 {
   const browser = await puppeteer.launch({headless: false});
   const page = await browser.newPage();
+  await page.goto(config.core.url.home);
   await page.goto(config.core.url.login);
   await page.waitForSelector(config.core.selector.passwordlogin).then(async () => {
     await page.click(config.core.selector.passwordlogin);
@@ -92,5 +93,5 @@ async function HandleLogin(keywords)
 }
 
 module.exports = HandleLogin;
-// keywords = new Array("腾讯", "星网", "百度", "支付宝");
+keywords = new Array("腾讯", "星网", "百度", "支付宝");
 // HandleLogin(keywords);

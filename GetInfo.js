@@ -275,6 +275,7 @@ async function HandleLogin()
 {
   const browser = await puppeteer.launch({headless: false});
   const page = await browser.newPage();
+  await page.goto(config.core.url.home);
   await page.goto(config.core.url.login);
   await page.waitForSelector(config.core.selector.passwordlogin).then(async () => {
     await page.click(config.core.selector.passwordlogin);
@@ -287,3 +288,5 @@ async function HandleLogin()
   GetInfo(browser);
 }
 module.exports = HandleLogin;
+
+// HandleLogin();
