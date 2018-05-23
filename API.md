@@ -6,7 +6,7 @@
 /company/_id
 比如：/company/firm_f1c5372005e04ba99175d5fd3db7b8fc.html
 
-## 获取投资和管理关系
+## 获取对外投资和管理关系
 /relations/1/_id
 比如：/relations/1/firm_f1c5372005e04ba99175d5fd3db7b8fc.html
 
@@ -26,3 +26,11 @@ value组成为0/1 + 边值
 示例同上
 value组成为0/1 + 边值
 0代表投资关系+边值为投资比例，1代表管理关系+边值代表职位
+
+## 获取3层对外投资和管理信息
+/relations/1/_id/3
+比如：/relations/1/firm_f1c5372005e04ba99175d5fd3db7b8fc.html/3
+
+## 获取3层被投资和被管理关系
+/relations/0/_id/3
+比如：/relations/0/firm_f1c5372005e04ba99175d5fd3db7b8fc.html/3
