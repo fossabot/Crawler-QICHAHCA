@@ -84,13 +84,13 @@ async function ChangItem_R(item)
 
 router.get('/:_ifAdj/:_id', async function(req, res, next) {
   let total_res = {};
-  let changewhat;
+  let changewhat = GetAdj;
   if(req.params._ifAdj == '1')
     changewhat = GetAdj;
   else if(req.params._ifAdj == '0')
     changewhat = GetRAdj;
   else {
-    next();
+    console.log("Wrong");
   }
   total_res.id = basic + req.params._id;
   total_res.value = "";
@@ -135,5 +135,78 @@ router.get('/:_ifAdj/:_id/3', async function(req, res, next) {
   }
   res.status(200).json(total_res);
 });
+
+router.get('/01/map/:_id', async function(req, res, next) {
+  let total_res = [];
+  let edge = {};
+  edge.fromID = basic + req.params._id;
+  edge.fromName = await GetName(edge.fromID);
+  async function AddToEdge(item)
+  {
+    let ttmp = {};
+    ttmp.fromID = edge.fromID;
+    ttmp.fromName = edge.fromName;
+    ttmp.toID = item.id;
+    ttmp.toName = item.name;
+    ttmp.value = item.value;
+    total_res.push(ttmp);
+  }
+  let edgeR = {};
+  edgeR.toID = basic + req.params._id;
+  edgeR.toName = await GetName(edgeR.toID);
+  async function AddFromEdge(item)
+  {
+    let ttmp = {};
+    ttmp.toID = edgeR.toID;
+    ttmp.toName = edgeR.toName;
+    ttmp.fromID = item.id;
+    ttmp.fromName = item.name;
+    ttmp.value = item.value;
+    total_res.push(ttmp);
+  }
+  async function AddRelations(item)
+  {
+    let ttmp = {};
+    // let is = _.split(item.id, 'com/', 2)[1];
+    // console.log(haha);
+    ttmp.fromID = item.id;
+    ttmp.fromName = item.name;
+    ttmp.toID = item.id;
+    ttmp.toName = item.name;
+    let ttmpAdj = await GetAdj(ttmp.fromID);
+    for (const eachItem of ttmpAdj)
+    {
+      let tput = {};
+      tput.fromID = ttmp.fromID;
+      tput.fromName = ttmp.fromName;
+      tput.toID = eachItem.id;
+      tput.toName = eachItem.name;
+      tput.value = eachItem.value;
+      total_res.push(tput);
+    }
+    let ttmpRAdj = await GetRAdj(ttmp.toID);
+    for (const eachItem of ttmpRAdj)
+    {
+      let tput = {};
+      tput.toID = ttmp.fromID;
+      tput.toName = ttmp.fromName;
+      tput.fromID = eachItem.id;
+      tput.fromName = eachItem.name;
+      tput.value = eachItem.value;
+      total_res.push(tput);
+    }
+    // total_res.push(ttmp);
+  }
+  let tmp = await GetAdj(edge.fromID);
+  const promises = tmp.map(AddToEdge);
+  await Promise.all(promises);
+  let tmpR = await GetRAdj(edgeR.toID);
+  const promisesR = tmpR.map(AddFromEdge);
+  await Promise.all(promisesR);
+  const promisesLast = tmpR.map(AddRelations);
+  await Promise.all(promisesLast);
+  res.status(200).json(total_res);
+});
+
 
 module.exports = router;

@@ -289,4 +289,4 @@ async function HandleLogin()
 }
 module.exports = HandleLogin;
 
-// HandleLogin();
+HandleLogin();
