@@ -44,7 +44,7 @@ async function ChangItem(item)
   });
 }
 
-router.get('/:_index', function(req, res, next) {
+router.get('/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
   MongoClient.connect(config.mongodb.url, function(err, Mongoclient) {
     if(err != null)
     {
@@ -59,7 +59,7 @@ router.get('/:_index', function(req, res, next) {
 
     const dbCompany = db.collection(config.mongodb.collectionName);
 
-    dbCompany.find({ "Name": { $regex: req.params._index, $options: 'i' }}).toArray(async function(err, docs){
+    dbCompany.find({ "Name": { $regex: req.params._index, $options: 'i' }}, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
