@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 
 const config = require('../config');
 
+const MongoClient = require('mongodb').MongoClient;
+
 const redis = require("redis");
 const client = redis.createClient(config.redis);
 
@@ -82,6 +84,38 @@ async function ChangItem_R(item)
   });
 }
 
+async function GetDetail(child)
+{
+  return new Promise(async function(resolve, reject) {
+    console.log(child);
+    MongoClient.connect(config.mongodb.url, function(err, client) {
+      if(err != null)
+      {
+        console.log(err);
+        res.status(500);
+      }
+      console.log("Connected successfully to server");
+
+      const dbName = config.mongodb.dbName;
+
+      const db = client.db(dbName);
+
+      const dbCompany = db.collection(config.mongodb.collectionName);
+      dbCompany.find({"_id" : child.id}).toArray(function(err, docs){
+        if(err != null)
+        {
+          console.log(err);
+          res.status(500);
+        }
+        console.log(docs);
+        child.detail = docs;
+        client.close();
+        resolve(child);
+    })
+  })
+  });
+}
+
 router.get('/:_ifAdj/:_id', async function(req, res, next) {
   let total_res = {};
   let changewhat = GetAdj;
@@ -98,6 +132,30 @@ router.get('/:_ifAdj/:_id', async function(req, res, next) {
   total_res.children = await changewhat(total_res.id);
   res.status(200).json(total_res);
 });
+
+
+router.get('/:_ifAdj/:_id/total', async function(req, res, next) {
+  let total_res = {};
+  let changewhat = GetAdj;
+  if(req.params._ifAdj == '1')
+    changewhat = GetAdj;
+  else if(req.params._ifAdj == '0')
+    changewhat = GetRAdj;
+  else {
+    console.log("Wrong");
+  }
+  total_res.id = basic + req.params._id;
+  total_res.value = "";
+  total_res.name = await GetName(total_res.id);
+  total_res.children = await changewhat(total_res.id);
+  const promises = total_res.children.map(GetDetail);
+  await Promise.all(promises).then(data => {
+    // console.log(data);
+    total_res.children = data;
+  });
+  res.status(200).json(total_res);
+});
+
 
 router.get('/:_ifAdj/:_id/3', async function(req, res, next) {
   let edge = "";

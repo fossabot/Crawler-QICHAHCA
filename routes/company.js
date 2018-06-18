@@ -34,8 +34,8 @@ router.get('/:_id', function(req, res, next) {
       console.log(docs);
       client.close();
       res.json(docs);
-    })
   })
+})
 });
 
 module.exports = router;

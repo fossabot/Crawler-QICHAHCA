@@ -11,7 +11,7 @@ config.mongodb = {
 }
 config.core = {
     user :  {
-         username : "15543416689",
+         username : "13104305884",
          password : "HHUCrawlQiChaCha"
     },
     url : {
