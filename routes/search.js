@@ -44,7 +44,7 @@ async function ChangItem(item)
   });
 }
 
-router.get('/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
+router.get('/:_type/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
   MongoClient.connect(config.mongodb.url, function(err, Mongoclient) {
     if(err != null)
     {
@@ -58,7 +58,11 @@ router.get('/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
     const db = Mongoclient.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-    dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
+
+    let query = {};
+    query[req.params._type] = {$regex: req.params._index, $options: 'i' };
+
+    dbCompany.find(query, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
@@ -77,7 +81,7 @@ router.get('/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
   });
 });
 
-router.get('/:_index/num', function(req, res, next) {
+router.get('/:_type/:_index/num', function(req, res, next) {
   MongoClient.connect(config.mongodb.url, function(err, Mongoclient) {
     if(err != null)
     {
@@ -91,7 +95,11 @@ router.get('/:_index/num', function(req, res, next) {
     const db = Mongoclient.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-    dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}).toArray(async function(err, docs){
+
+    let query = {};
+    query[req.params._type] = {$regex: req.params._index, $options: 'i' };
+
+    dbCompany.find(query).toArray(async function(err, docs){
       // console.log(searchType);
       if(err != null)
       {
@@ -106,7 +114,7 @@ router.get('/:_index/num', function(req, res, next) {
   });
 });
 
-router.get('/:_index/autoprefix', function(req, res, next) {
+router.get('/:_type/:_index/autoprefix', function(req, res, next) {
   MongoClient.connect(config.mongodb.url, function(err, Mongoclient) {
     if(err != null)
     {
@@ -120,8 +128,10 @@ router.get('/:_index/autoprefix', function(req, res, next) {
     const db = Mongoclient.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-    const searchType = req.params._type;
-        dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}, {"projection" : {"Name" : 1}}).toArray(async function(err, docs){
+    let query = {};
+    query[req.params._type] = {$regex: req.params._index, $options: 'i' };
+    console.log(query);
+    dbCompany.find(query, {"projection" : {"Name" : 1}}).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
