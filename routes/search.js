@@ -58,8 +58,7 @@ router.get('/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
     const db = Mongoclient.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-
-    dbCompany.find({ "Name": { $regex: req.params._index, $options: 'i' }}, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
+    dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
@@ -92,19 +91,52 @@ router.get('/:_index/num', function(req, res, next) {
     const db = Mongoclient.db(dbName);
 
     const dbCompany = db.collection(config.mongodb.collectionName);
-
-    dbCompany.find({ "Name": { $regex: req.params._index, $options: 'i' }}).toArray(async function(err, docs){
+    dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}).toArray(async function(err, docs){
+      // console.log(searchType);
       if(err != null)
       {
         console.log(err);
         res.status(500);
       }
       Mongoclient.close();
-      console.log(docs);
+      // console.log(docs);
       res.status(200).json({"length":docs.length});
     })
 
   });
 });
 
+router.get('/:_index/autoprefix', function(req, res, next) {
+  MongoClient.connect(config.mongodb.url, function(err, Mongoclient) {
+    if(err != null)
+    {
+      console.log(err);
+      return;
+    }
+    console.log("Connected successfully to server");
+
+    const dbName = config.mongodb.dbName;
+
+    const db = Mongoclient.db(dbName);
+
+    const dbCompany = db.collection(config.mongodb.collectionName);
+    const searchType = req.params._type;
+        dbCompany.find({ "Name" : { $regex: req.params._index, $options: 'i' }}, {"projection" : {"Name" : 1}}).toArray(async function(err, docs){
+      if(err != null)
+      {
+        console.log(err);
+        res.status(500);
+      }
+      const promises = docs.map(ChangItem);
+      await Promise.all(promises).then(data => {
+        // console.log(data);
+        docs = data;
+      });
+      Mongoclient.close();
+      console.log(docs);
+      res.status(200).json(docs);
+    })
+
+  });
+});
 module.exports = router;
