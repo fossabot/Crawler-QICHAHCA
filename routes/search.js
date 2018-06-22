@@ -131,7 +131,11 @@ router.get('/:_type/:_index/autoprefix', function(req, res, next) {
     let query = {};
     query[req.params._type] = {$regex: req.params._index, $options: 'i' };
     console.log(query);
-    dbCompany.find(query, {"projection" : {"Name" : 1}}).toArray(async function(err, docs){
+    let projection = {};
+    projection[req.params._type] = 1;
+    let option = {};
+    option["projection"] = projection;
+    dbCompany.find(query, option).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
