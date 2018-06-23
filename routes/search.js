@@ -99,7 +99,7 @@ router.get('/:_type/:_index/num', function(req, res, next) {
     let query = {};
     query[req.params._type] = {$regex: req.params._index, $options: 'i' };
 
-    dbCompany.find(query).toArray(async function(err, docs){
+    dbCompany.find(query).count(async function(err, docs){
       // console.log(searchType);
       if(err != null)
       {
@@ -107,8 +107,8 @@ router.get('/:_type/:_index/num', function(req, res, next) {
         res.status(500);
       }
       Mongoclient.close();
-      // console.log(docs);
-      res.status(200).json({"length":docs.length});
+      console.log(docs);
+      res.status(200).json({"length":docs});
     })
 
   });
