@@ -40,6 +40,11 @@ async function ChangItem(item)
   return new Promise(async function(resolve, reject){
       item.PR = await GetPR(item._id);
       // console.log(item.children);
+      if(item.PR == null)
+        item.PR = 0;
+      else {
+        item.PR = parseFloat(item.PR);
+      }
       resolve(item);
   });
 }
@@ -61,8 +66,13 @@ router.get('/:_type/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
 
     let query = {};
     query[req.params._type] = {$regex: req.params._index, $options: 'i' };
-
-    dbCompany.find(query, {skip : (req.params._pageIndex - 1) * req.params._pageNum, limit : req.params._pageNum}).toArray(async function(err, docs){
+    let options = {};
+    options["skip"] = (req.params._pageIndex - 1) * req.params._pageNum;
+    options["limit"] = req.params._pageNum;
+    // let projection = {};
+    // projection[req.params._type] = 1;
+    // options["projection"] = projection;
+    dbCompany.find(query, options).toArray(async function(err, docs){
       if(err != null)
       {
         console.log(err);
@@ -74,7 +84,12 @@ router.get('/:_type/:_index/:_pageNum/:_pageIndex', function(req, res, next) {
         docs = data;
       });
       // console.log(docs);
+      docs = _.orderBy(docs, ['PR'], ['desc']);
       Mongoclient.close();
+      // for (let j = 0; j < docs.length; j ++)
+      // {
+      //   console.log(docs[j].PR);
+      // }
       res.status(200).json(docs);
     })
 

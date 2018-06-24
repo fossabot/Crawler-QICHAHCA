@@ -93,5 +93,5 @@ async function HandleLogin(keywords)
 }
 
 module.exports = HandleLogin;
-keywords = new Array("腾讯", "星网", "游戏", "设计");
+keywords = new Array("马化腾", "蔡明威", "快手", "抖音");
 HandleLogin(keywords);
