@@ -16,7 +16,7 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 });
 
 sequelize.authenticate();
-console.log("Have connected mysql!");
+// console.log("Have connected mysql!");
 
 const  Investor = sequelize.import(__dirname + "/models/Investor");
 const  Manager = sequelize.import(__dirname + "/models/Manager");

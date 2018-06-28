@@ -16,13 +16,13 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 });
 
 sequelize.authenticate();
-console.log("Have connected mysql!");
+// console.log("Have connected mysql!");
 
 const  Company = sequelize.import(__dirname + "/models/Company");
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-async function main()
+async function mongo()
 {
   MongoClient.connect(config.mongodb.url, function(err, client) {
     if(err != null)
@@ -72,5 +72,5 @@ async function main()
 
   }
 }
-module.exports = main;
-main();
+module.exports = mongo;
+mongo();

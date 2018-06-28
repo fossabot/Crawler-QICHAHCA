@@ -11,7 +11,7 @@ config.mongodb = {
 }
 config.core = {
     user :  {
-         username : "13104305884",
+         username : "13936749405",
          password : "HHUCrawlQiChaCha"
     },
     url : {
@@ -23,7 +23,7 @@ config.core = {
         username : '#nameNormal',
         password : '#pwdNormal',
         passwordlogin : '#normalLogin',
-        search_page_num : 10,
+        search_page_num : 3,
         search_res_num : 10,
         is_search_res : '#company-top > div > div.content > div.row.title',
         nextPage : '#ajaxpage'

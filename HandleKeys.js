@@ -21,7 +21,7 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 });
 
 sequelize.authenticate();
-console.log("Have connected mysql!");
+// console.log("Have connected mysql!");
 const  WairForHandleCompany = sequelize.import(__dirname + "/models/WairForHandleCompany");
 const  Company = sequelize.import(__dirname + "/models/Company");
 const  Investor = sequelize.import(__dirname + "/models/Investor");
@@ -73,7 +73,7 @@ async function StartHandleKeys(browser, page, keywords) {
         await page.reload();
         await HandleOneKey(browser, keywords[i]);
     }
-    // await browser.close();
+    await browser.close();
   }
 async function HandleLogin(keywords)
 {
@@ -93,5 +93,5 @@ async function HandleLogin(keywords)
 }
 
 module.exports = HandleLogin;
-keywords = new Array("马化腾", "蔡明威", "快手", "抖音");
+keywords = new Array("河海", "科技", "设计", "滴滴", "神舟");
 HandleLogin(keywords);

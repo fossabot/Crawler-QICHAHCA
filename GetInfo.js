@@ -21,7 +21,7 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 });
 
 sequelize.authenticate();
-console.log("Have connected mysql!");
+// console.log("Have connected mysql!");
 const  WairForHandleCompany = sequelize.import(__dirname + "/models/WairForHandleCompany");
 const  Handled = sequelize.import(__dirname + "/models/Handled");
 const  Company = sequelize.import(__dirname + "/models/Company");
