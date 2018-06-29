@@ -68,7 +68,6 @@ mysql.getInvesSel = function (index) {
   res.InvestRate = "#Sockinfo > table > tbody > tr:nth-child(" + index.toString() +  ") > td:nth-child(3)";
   res.InvestMoney = "#Sockinfo > table > tbody > tr:nth-child(" + index.toString() +  ") > td:nth-child(4)";
   res.SellDate = "#Sockinfo > table > tbody > tr:nth-child(" + index.toString() +  ") > td:nth-child(5)";
-  res.Type = "#Sockinfo > table > tbody > tr:nth-child(" + index.toString() +  ") > td:nth-child(6)";
   return res;
 }
 

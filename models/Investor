@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     InvestorName : { type: Sequelize.STRING, allowNull: false},
     InvestMoney : { type: Sequelize.STRING, allowNull: false},
     InvestRate : { type: Sequelize.STRING, allowNull: false},
-    Type     : { type: Sequelize.STRING, allowNull: false},
     SellDate : { type: Sequelize.STRING, allowNull: true},
     CompanyID : { type: Sequelize.STRING, unique: false , allowNull: false},
     CompanyName : { type: Sequelize.STRING, unique: false , allowNull: false},

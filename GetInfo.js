@@ -131,9 +131,9 @@ async function GetInfo(browser)
               var tmp = element.innerHTML.replace("<br>", "").trim();
               return tmp;
             });
-            resInves['Type'] = await page.$eval(mysql.getInvesSel(i).Type, (element) => {
-              return element.innerHTML.replace("<br>", "").trim();
-            });
+            // resInves['Type'] = await page.$eval(mysql.getInvesSel(i).Type, (element) => {
+            //   return element.innerHTML.replace("<br>", "").trim();
+            // });
             resInves['CompanyID'] = companyID;
             resInves['CompanyName'] = await page.$eval(mysql.companySel.Name, (element) => {
               return element.innerHTML;
