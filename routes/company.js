@@ -17,6 +17,7 @@ router.get('/:_id', function(req, res, next) {
     {
       console.log(err);
       res.status(500);
+        
     }
     console.log("Connected successfully to server");
 
