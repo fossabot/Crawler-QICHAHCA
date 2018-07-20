@@ -1,5 +1,6 @@
 mysql = {};
 
+// mysql的配置
 mysql.core = {
   user :  {
        username : 'eye',
@@ -9,6 +10,7 @@ mysql.core = {
   database : 'Eye'
 };
 
+// 配置项对应的网站xpath/selector
 mysql.companySel = {
   Name : '#company-top > div > div.content > div.row.title > h1',
   Logo : '#company-top > div > div.logo > div.imgkuang > img',

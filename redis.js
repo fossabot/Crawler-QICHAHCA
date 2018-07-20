@@ -1,7 +1,11 @@
+/* 实现将清洗后的mysql数据导入redis */
+
 const config = require('./config');
 
 const Sequelize = require('sequelize');
 const mysql = require('./mysql');
+
+// 建立与mysql的连接
 const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, mysql.core.user.password, {
   host: mysql.core.localhost,
   dialect: 'mysql',
@@ -18,9 +22,11 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 sequelize.authenticate();
 // console.log("Have connected mysql!");
 
+// 引入mysql的单个表
 const  Investor = sequelize.import(__dirname + "/models/Investor");
 const  Manager = sequelize.import(__dirname + "/models/Manager");
 
+// 建立与redis的连接
 const redis = require("redis");
 const client = redis.createClient(config.redis);
 
@@ -33,6 +39,7 @@ client.on("connect", function (msg) {
     console.log("Redis connected");
 });
 
+// 处理数据库中的单个记录
 async function HandleOneRecord(data, type)
 {
   if(type == 0)
@@ -53,6 +60,7 @@ async function HandleOneRecord(data, type)
   }
 }
 
+// 处理管理关系
 async function HandleManager()
 {
   let data = await Manager.findOne({});
@@ -66,6 +74,7 @@ async function HandleManager()
   console.log("Need More Manager");
 }
 
+// 处理投资关系
 async function HandleInvestor()
 {
   let data = await Investor.findOne({});
@@ -79,6 +88,7 @@ async function HandleInvestor()
   console.log("Need More Investor");
 }
 
+// 主程序入口
 async function main()
 {
   HandleManager();

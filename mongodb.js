@@ -1,7 +1,11 @@
+/* 实现将清洗后的mysql数据导入mongodb */
+
 const config = require('./config');
 
 const Sequelize = require('sequelize');
 const mysql = require('./mysql');
+
+// 建立与mysql的连接
 const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, mysql.core.user.password, {
   host: mysql.core.localhost,
   dialect: 'mysql',
@@ -20,6 +24,7 @@ sequelize.authenticate();
 
 const  Company = sequelize.import(__dirname + "/models/Company");
 
+// 建立与mongodb的连接
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 async function mongo()
@@ -38,6 +43,7 @@ async function mongo()
 
     const dbCompany = db.collection(config.mongodb.collectionName);
 
+    // 处理主体的详细信息
     async function HandleCompany()
     {
       let data = await Company.findOne({});
@@ -55,6 +61,7 @@ async function mongo()
     HandleCompany();
   });
 
+  // 处理单条记录
   async function HandleOneRecord(collection, data)
   {
     data.dataValues._id = data.dataValues.ID;
