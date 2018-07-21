@@ -6,7 +6,7 @@ mysql.core = {
        username : 'eye',
        password : 'Anatas'
   },
-  localhost : '115.159.39.220',
+  localhost : '139.196.101.226',
   database : 'Eye'
 };
 

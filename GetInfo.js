@@ -38,7 +38,7 @@ const  Manager = sequelize.import(__dirname + "/models/Manager");
 
 sequelize.sync();
 
-//
+// 到特定页面
 async function GetInfo(browser)
 {
   // const browser = await puppeteer.launch({headless: false});
