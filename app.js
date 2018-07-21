@@ -2,12 +2,13 @@
 // const HandleRedis = require("./redis");
 // const HandleMongodb = require("./mongodb");
 
+// 设置路由
+const company = require('./routes/company'); // 返回公司的详细信息
+const relations = require('./routes/relations'); // 返回主体之间的关联信息
+const search = require('./routes/search'); // 返回检索结果
+const data = require('./routes/data'); // 测试用的地址
 
-const company = require('./routes/company');
-const relations = require('./routes/relations');
-const search = require('./routes/search');
-const data = require('./routes/data');
-
+// 项目的初始化以及json的解析
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 设置安全策略
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -36,6 +38,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+// 设置路由
 app.use('/company', company);
 app.use('/relations', relations);
 app.use('/search', search);

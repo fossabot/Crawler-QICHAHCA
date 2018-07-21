@@ -1,14 +1,22 @@
+/* 保存了项目的配置，包括数据库，爬虫等等的配置 */
+
 config = {};
+
+// redis配置
 config.redis = {
-    host : "115.159.39.220",
+    host : "139.196.101.226",
     port : "6379",
     password : "Anatas"
 }
+
+// mongodb配置
 config.mongodb = {
-    url : "mongodb://115.159.39.220:27017",
+    url : "mongodb://139.196.101.226:27017",
     dbName : "Crawl",
     collectionName : "Company"
 }
+
+//爬虫的配置
 config.core = {
     user :  {
          username : "18781934579",

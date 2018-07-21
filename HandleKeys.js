@@ -1,11 +1,15 @@
+/* 根据提供的关键词，通过企查查等网站的检索接口，获取相关关键词的检索条目结果，将相应结果的URL存入数据库中 */
+
 const puppeteer = require('puppeteer');
 const uuidv4 = require('uuid/v4');
 
 const config = require('./config');
 const mysql = require('./mysql');
 
+// 定时函数的简化写法
 const timer = ms => new Promise( res => setTimeout(res, ms));
 
+// 建立与mysql的连接
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, mysql.core.user.password, {
   host: mysql.core.localhost,
@@ -22,6 +26,8 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
 
 sequelize.authenticate();
 // console.log("Have connected mysql!");
+
+// 引入相关的表格定义
 const  WairForHandleCompany = sequelize.import(__dirname + "/models/WairForHandleCompany");
 const  Company = sequelize.import(__dirname + "/models/Company");
 const  Investor = sequelize.import(__dirname + "/models/Investor");
@@ -30,7 +36,7 @@ const  Manager = sequelize.import(__dirname + "/models/Manager");
 const  Person = sequelize.import(__dirname + "/models/Person");
 sequelize.sync();
 
-
+// 处理单条记录
 async function HandleOnePage(browser, keyword, index)
 {
   all_url = config.SearchURL(keyword, index);
@@ -59,13 +65,17 @@ async function HandleOnePage(browser, keyword, index)
     await page.close();
   })
 }
+
+// 处理单个关键词
 async function HandleOneKey(browser, keyword){
     for (var i = 1; i <= config.core.selector.search_page_num; i ++)
     {
         HandleOnePage(browser, keyword, i);
-        await timer(config.core.time.pageWait);
+        await timer(config.core.time.pageWait); // 设置一定的爬取间隔，应对反爬机制
     }
 }
+
+// 枚举关键词，对于每个关键词，枚举不同的页数
 async function StartHandleKeys(browser, page, keywords) {
 
     for (let i = 0; i < keywords.length; i ++)
@@ -75,6 +85,8 @@ async function StartHandleKeys(browser, page, keywords) {
     }
     await browser.close();
   }
+
+// 爬虫的初始化工作
 async function HandleLogin(keywords)
 {
   const browser = await puppeteer.launch({headless: false});

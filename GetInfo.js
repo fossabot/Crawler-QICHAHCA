@@ -1,11 +1,15 @@
+/* 按照抓取到的URL，进入企查查的详细信息界面，进行信息抓取 */
+
 const puppeteer = require('puppeteer');
 const uuidv4 = require('uuid/v4');
 
 const config = require('./config');
 const mysql = require('./mysql');
 
+// 定时函数的简化写法
 const timer = ms => new Promise( res => setTimeout(res, ms));
 
+// 建立与mysql的连接
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, mysql.core.user.password, {
   host: mysql.core.localhost,
@@ -20,8 +24,11 @@ const sequelize = new Sequelize(mysql.core.database, mysql.core.user.username, m
   }
 });
 
+
 sequelize.authenticate();
 // console.log("Have connected mysql!");
+
+// 引入数据库的表定义
 const  WairForHandleCompany = sequelize.import(__dirname + "/models/WairForHandleCompany");
 const  Handled = sequelize.import(__dirname + "/models/Handled");
 const  Company = sequelize.import(__dirname + "/models/Company");
@@ -31,7 +38,7 @@ const  Manager = sequelize.import(__dirname + "/models/Manager");
 
 sequelize.sync();
 
-
+// 到特定页面
 async function GetInfo(browser)
 {
   // const browser = await puppeteer.launch({headless: false});
@@ -271,6 +278,7 @@ async function GetInfo(browser)
   }
 }
 
+// 爬虫的初始化工作
 async function HandleLogin()
 {
   const browser = await puppeteer.launch({headless: false});
